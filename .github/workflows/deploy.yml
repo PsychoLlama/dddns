@@ -10,6 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
+        with:
+          node-version: 14
       - uses: bahmutov/npm-install@v1
       - name: Build production bundle
         run: yarn build
