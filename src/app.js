@@ -6,6 +6,9 @@ import DelegatedPeerRouter from 'libp2p-delegated-peer-routing';
 import IpfsHttpClient from 'ipfs-http-client';
 import PeerId from 'peer-id';
 
+// I don't need your judgement.
+const $ = document.querySelector.bind(document);
+
 async function main() {
   const delegates = Array(4).fill()
     .map((_, i) => i)
@@ -14,6 +17,7 @@ async function main() {
     .map(config => new IpfsHttpClient(config))
     .map(client => new DelegatedPeerRouter(client));
 
+  updateStatus('Initializing node...');
   const p2p = await P2P.create({
     connectionManager: {
       maxPeers: 10,
@@ -29,10 +33,44 @@ async function main() {
 
   await p2p.start();
 
-  global.resolve = function(peerId) {
-    const pid = PeerId.createFromCID(peerId);
-    return p2p.peerRouting.findPeer(pid);
+  // Prevent slower queries from knocking out newer ones.
+  let searchNumber = 0;
+
+  $('form').addEventListener('submit', async () => {
+    updateStatus('Resolving network addresses...');
+    const thisSearch = ++searchNumber;
+
+    const peerCid = $('#peer-id').value;
+    const results = await search(peerCid);
+
+    if (searchNumber === thisSearch) {
+      updateStatus(results);
+    }
+  });
+
+  updateStatus('Ready');
+
+  async function search(peerCid) {
+    try {
+      const peerId = PeerId.createFromCID(peerCid);
+      const { multiaddrs } = await p2p.peerRouting.findPeer(peerId);
+      const formattedAddrs = JSON.stringify(multiaddrs, null, 2);
+      return `Resolved:\n${formattedAddrs}`;
+    } catch (error) {
+      return `Failed:\n${error}`;
+    }
   }
 }
+
+// Keep the user loosely informed.
+function updateStatus(status) {
+  $('#status').innerText = status;
+}
+
+// Don't reload the page.
+$('form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+});
 
 main();

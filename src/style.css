@@ -1,0 +1,10 @@
+body {
+  font-family: sans-serif;
+  color: #333;
+  margin: 1rem 1.5rem;
+}
+
+label[for="peer-id"] {
+  display: block;
+  margin: 8px 0;
+}

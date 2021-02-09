@@ -3,10 +3,16 @@
     <title>IPFS Gateway Client | Libp2p</title>
     <meta charset="utf8" />
     <meta content="favicon icon" href="#" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
 
   <body>
-    <p>Open the console and call <code>resolve(...)</code> with any peer ID.</p>
+    <form>
+      <label for="input">Query</label>
+      <input id="peer-id" placeholder="QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa"></input>
+      <input type="submit" value="Find" />
+    </form>
+    <pre id="status">Loading app...</pre>
     <script src="./app.js"></script>
   </body>
 </html>
