@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,KACE,sBAAuB,CACvB,UAAW,CACX,kBACF,CAEA,mBACE,aAAc,CACd,YACF","file":"style.cf536c1f.css","sourceRoot":"../src","sourcesContent":["body {\n  font-family: sans-serif;\n  color: #333;\n  margin: 1rem 1.5rem;\n}\n\nlabel[for=\"peer-id\"] {\n  display: block;\n  margin: 8px 0;\n}\n"]}
