@@ -1,7 +1,7 @@
 {
-  "name": "p2p-browser-client",
+  "name": "dddns",
   "version": "0.1.0",
-  "description": "Leverage the IPFS torrent as a self-hosted name service",
+  "description": "Leverage IPFS as a name resolution service",
   "main": "src/app.js",
   "author": "Jesse Gibson <JesseTheGibson@gmail.com>",
   "license": "MIT",
@@ -10,7 +10,10 @@
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html"
   },
-  "browserslist": "firefox 85",
+  "browserslist": [
+    "last 5 chrome versions",
+    "last 5 firefox versions"
+  ],
   "dependencies": {
     "ipfs-http-client": "^49.0.2",
     "libp2p": "^0.30.7",
