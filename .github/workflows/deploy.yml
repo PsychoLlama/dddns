@@ -14,7 +14,7 @@ jobs:
           node-version: 14
       - uses: bahmutov/npm-install@v1
       - name: Build production bundle
-        run: yarn build
+        run: yarn build --public-url /dddns
       - if: success()
         uses: crazy-max/ghaction-github-pages@v2
         with:
