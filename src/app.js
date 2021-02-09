@@ -7,11 +7,12 @@ import IpfsHttpClient from 'ipfs-http-client';
 import PeerId from 'peer-id';
 
 async function main() {
-  const peerRouter = new DelegatedPeerRouter(new IpfsHttpClient({
-    protocol: 'https',
-    port: 443,
-    host: 'node0.delegate.ipfs.io'
-  }));
+  const delegates = Array(4).fill()
+    .map((_, i) => i)
+    .map(replica => `node${replica}.delegate.ipfs.io`)
+    .map(host => ({ host, port: 443, protocol: 'https' }))
+    .map(config => new IpfsHttpClient(config))
+    .map(client => new DelegatedPeerRouter(client));
 
   const p2p = await P2P.create({
     connectionManager: {
@@ -19,7 +20,7 @@ async function main() {
       pollInterval: 5000,
     },
     modules: {
-      peerRouting: [peerRouter],
+      peerRouting: delegates,
       transport: [Websockets],
       streamMuxer: [MPLEX],
       connEncryption: [NOISE],
