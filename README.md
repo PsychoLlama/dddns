@@ -1,5 +1,5 @@
 # Decentralized Address Resolution
-Like DDNS, but decentralized.
+Like DDNS, but decentralized. [Live demo](https://psychollama.github.io/dddns/).
 
 ## Purpose
 Say I want to open an encrypted socket into a LAN server from a static site to power a self-hosted app. I could use a DDNS service, but what's the point of P2P networking if it's facilitated by a centralized service? I could hard-code the IP, but that changes too easily. What I want is _Decentralized_ DDNS.
@@ -12,3 +12,12 @@ This site serves as a light frontend to the routing delegates providing network 
 
 ## Drawbacks
 This approach still relies on federated servers. If they go down or change the protocol, the approach falls apart. On the flipside, you can easily [host your own](https://github.com/libp2p/js-libp2p-delegated-peer-routing) and run it alongside. You should do that for any critical application anyway.
+
+## Usage
+- Start a local IPFS node using [ipfs-core](https://github.com/ipfs/js-ipfs/tree/master/packages/ipfs-core):
+  ```js
+  // Use the JavaScript implementation.
+  // The Golang version doesn't advertise in the same way.
+  require('ipfs-core').create()
+  ```
+- Copy and paste the peer ID into [the DDDNS search form](https://psychollama.github.io/dddns/).
